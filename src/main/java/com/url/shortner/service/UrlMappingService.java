@@ -1,4 +1,10 @@
 package com.url.shortner.service;
+
+import com.url.shortner.models.ClickEvent;
+import com.url.shortner.models.UrlMapping;
+
+import java.time.LocalDateTime;
+
 @Service
 @AllArgsConstructor
 public class UrlMappingService {
