@@ -1,5 +1,6 @@
 package com.url.shortner.security;
 
+import com.url.shortner.security.jwt.JwtAuthenticationFilter;
 import com.url.shortner.service.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -43,8 +44,9 @@ public class WebSecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(userDetailsService);
+//        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
@@ -55,7 +57,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/urls/**").authenticated()
+                                .requestMatchers("/api/urls/**").authenticated()
+//                                .requestMatchers("/api/urls/**").permitAll()
                         .requestMatchers("/{shortUrl}").permitAll()
                         .anyRequest().authenticated()
                 );

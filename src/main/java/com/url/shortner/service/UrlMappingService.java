@@ -1,9 +1,21 @@
 package com.url.shortner.service;
 
+import com.url.shortner.dtos.ClickEventDTO;
+import com.url.shortner.dtos.UrlMappingDTO;
 import com.url.shortner.models.ClickEvent;
 import com.url.shortner.models.UrlMapping;
+import com.url.shortner.models.User;
+import com.url.shortner.repository.ClickEventRepository;
+import com.url.shortner.repository.UrlMappingRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
