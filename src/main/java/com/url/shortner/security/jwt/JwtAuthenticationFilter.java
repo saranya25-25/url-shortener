@@ -29,6 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
+        System.out.println("JWT FILTER HIT : " + request.getServletPath());
         try {
             String jwt = jwtTokenProvider.getJwtFromHeader(request);
 

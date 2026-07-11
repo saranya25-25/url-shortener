@@ -21,6 +21,8 @@ public class AuthController {
 
     @PostMapping("/public/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest){
+
+        System.out.println("========LOGIN API HIT========");
         return ResponseEntity.ok(userService.authenticateUser(loginRequest));
     }
 
