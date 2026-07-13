@@ -7,9 +7,9 @@ function App() {
   const CurrentApp = getApps();
 
   return (
-    <Router>
-      <CurrentApp />
-    </Router>
+   <Router>
+       <CurrentApp />
+   </Router>
   )
 }
 
