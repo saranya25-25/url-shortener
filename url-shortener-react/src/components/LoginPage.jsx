@@ -67,7 +67,7 @@ const LoginPage = () => {
                 </h1>
 
                 <p className="text-center text-slate-500 mt-2 mb-6">
-                    Sign in to access your Linklytics dashboard.
+                    Sign in to access your LinkForge dashboard.
                 </p>
 
                 <hr className="mb-6" />

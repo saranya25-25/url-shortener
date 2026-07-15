@@ -60,19 +60,19 @@ const Footer = () => {
                 </div>
 
                 <h1 className="text-4xl font-extrabold bg-gradient-to-r from-cyan-300 via-white to-purple-300 bg-clip-text text-transparent">
-                  Linklytics
+                  LinkForge
                 </h1>
               </div>
 
               <p className="text-white/80 leading-7">
-                Linklytics helps you shorten, organize, and monitor your URLs
+                LinkForge helps you shorten, organize, and monitor your URLs
                 with powerful analytics, secure link management, and lightning
                 fast redirects.
               </p>
 
               <div className="flex items-center gap-3 mt-6 text-white/80">
                 <FaEnvelope />
-                <span>support@linklytics.com</span>
+                <span>support@LinkForge.com</span>
               </div>
             </motion.div>
 
@@ -142,7 +142,7 @@ const Footer = () => {
 
               <p className="mt-8 text-white/80 leading-7">
                 Stay connected and discover the latest updates, features, and
-                improvements from Linklytics.
+                improvements from LinkForge.
               </p>
             </motion.div>
           </div>
@@ -150,7 +150,7 @@ const Footer = () => {
           {/* Bottom */}
           <div className="mt-12 pt-6 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-white/80 text-center">
-              © 2026 Linklytics. All Rights Reserved.
+              © 2026 LinkForge. All Rights Reserved.
             </p>
 
             <p className="text-white/70 text-sm text-center">

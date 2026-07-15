@@ -60,7 +60,7 @@ const RegisterPage = () => {
                 </h1>
 
                 <p className="text-center text-slate-500 mt-2 mb-6">
-                    Join Linklytics and start managing your URLs smarter.
+                    Join LinkForge and start managing your URLs smarter.
                 </p>
 
                 <hr className="mb-6" />

@@ -30,7 +30,7 @@ const features = [
     icon: <FaChartLine className="text-red-500 text-3xl" />,
     title: "Fast & Dependable",
     description:
-        "Built for speed and reliability, Linklytics ensures every redirect happens instantly. Enjoy consistent performance and high availability whenever your links are accessed.",
+        "Built for speed and reliability, LinkForge ensures every redirect happens instantly. Enjoy consistent performance and high availability whenever your links are accessed.",
   },
 ];
 
@@ -75,7 +75,7 @@ const AboutPage = () => {
               transition={{ duration: 0.7 }}
               className="sm:text-5xl text-4xl font-extrabold text-slate-800 italic mb-5"
           >
-            About Linklytics
+            About LinkForge
           </motion.h1>
 
           {/* Description */}
@@ -85,10 +85,10 @@ const AboutPage = () => {
               transition={{ delay: 0.2, duration: 0.7 }}
               className="text-gray-600 leading-8 xl:w-[65%] lg:w-[75%] sm:w-[90%] w-full mb-12 text-[15px]"
           >
-            Linklytics is a modern URL shortening platform designed to make link
+            LinkForge is a modern URL shortening platform designed to make link
             sharing faster, smarter, and more efficient. Whether you're sharing
             content with friends, promoting your business, or tracking marketing
-            campaigns, Linklytics provides an intuitive solution with reliable
+            campaigns, LinkForge provides an intuitive solution with reliable
             performance, insightful analytics, and secure link management—all in
             one place.
           </motion.p>
