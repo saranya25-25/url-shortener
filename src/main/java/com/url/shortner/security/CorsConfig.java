@@ -1,5 +1,6 @@
 package com.url.shortner.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -11,15 +12,15 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
+    @Value("${FRONTEND_URL}")
+    private String frontendUrl;
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of(
-                "http://localhost:5173",
-                "https://resplendent-licorice-f3a705.netlify.app"
-        ));
+        configuration.setAllowedOrigins(List.of(frontendUrl));
 
         configuration.setAllowedMethods(List.of(
                 "GET",
