@@ -26,14 +26,37 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public JwtAuthenticationResponse authenticateUser(LoginRequest loginRequest){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
-                        loginRequest.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        String jwt = jwtUtils.generateToken(userDetails);
-        return new JwtAuthenticationResponse(jwt);
+    public JwtAuthenticationResponse authenticateUser(LoginRequest loginRequest) {
+
+        try {
+
+            System.out.println("LOGIN USERNAME : " + loginRequest.getUsername());
+
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()
+                    )
+            );
+
+            System.out.println("AUTHENTICATION SUCCESS");
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            UserDetailsImpl userDetails =
+                    (UserDetailsImpl) authentication.getPrincipal();
+
+            String jwt = jwtUtils.generateToken(userDetails);
+
+            return new JwtAuthenticationResponse(jwt);
+
+        } catch (Exception e) {
+
+            System.out.println("LOGIN FAILED");
+            e.printStackTrace();
+
+            throw e;
+        }
     }
 
     public User findByUsername(String name) {
