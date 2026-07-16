@@ -17,6 +17,7 @@ public class CorsConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(List.of(
+                "http://localhost:5173",
                 "https://resplendent-licorice-f3a705.netlify.app"
         ));
 
