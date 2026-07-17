@@ -10,7 +10,10 @@ import LoginPage from "./components/LoginPage";
 import DashboardLayout from "./components/Dashboard/DashboardLayout";
 import PrivateRoute from "./PrivateRoute";
 import ErrorPage from "./components/ErrorPage";
-
+import ForgotPassword from "./pages/ForgotPassword";
+import VerifyOtp from "./pages/VerifyOtp";
+import ResetPassword from "./pages/ResetPassword";
+// import ForgotPassword from "./components/ForgotPassword";
 // <PrivateRoute publicPage={true}>
 //      <RegisterPage />
 // </PrivateRoute>
@@ -29,7 +32,20 @@ const AppRouter = () => {
 
           <Route path="/register" element={<PrivateRoute publicPage={true}><RegisterPage /></PrivateRoute>} />
           <Route path="/login" element={<PrivateRoute publicPage={true}><LoginPage /></PrivateRoute>} />
-          
+            <Route
+                path="/forgot-password"
+                element={<ForgotPassword />}
+            />
+
+            <Route
+                path="/verify-otp"
+                element={<VerifyOtp />}
+            />
+
+            <Route
+                path="/reset-password"
+                element={<ResetPassword />}
+            />
           <Route path="/dashboard" element={ <PrivateRoute publicPage={false}><DashboardLayout /></PrivateRoute>} />
           <Route path="/error" element={ <ErrorPage />} />
           <Route path="*" element={ <ErrorPage message="We can't seem to find the page you're looking for"/>} />
