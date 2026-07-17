@@ -13,8 +13,6 @@ public interface OtpVerificationRepository
             String email,
             String otp
     );
-
-
     Optional<OtpVerification> findTopByEmailOrderByIdDesc(
             String email
     );
