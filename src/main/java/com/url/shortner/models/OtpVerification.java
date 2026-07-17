@@ -19,5 +19,5 @@ public class OtpVerification {
 
     private LocalDateTime expiryTime;
 
-    private boolean verified;
+    private boolean verified = false;
 }

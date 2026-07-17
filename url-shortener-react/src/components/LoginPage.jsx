@@ -35,13 +35,15 @@ const LoginPage = () => {
                 data
             );
 
+            // Save JWT Token
             setToken(response.token);
-            localStorage.setItem("JWT_TOKEN", JSON.stringify(response.token));
+            localStorage.setItem("JWT_TOKEN", response.token);
 
             toast.success("Login Successful!");
             reset();
 
             navigate("/dashboard");
+
         } catch (error) {
             console.error(error);
             toast.error("Login Failed!");
@@ -50,18 +52,18 @@ const LoginPage = () => {
         }
     };
 
-    // Show loader while login request is in progress
     if (loader) {
         return <Loader />;
     }
 
     return (
         <div className="min-h-[calc(100vh-64px)] flex justify-center items-center bg-gradient-to-br from-slate-50 via-white to-blue-50 px-4">
+
             <form
                 onSubmit={handleSubmit(loginHandler)}
                 className="sm:w-[450px] w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 px-8 py-10"
             >
-                {/* Heading */}
+
                 <h1 className="text-center text-3xl font-bold text-slate-800">
                     Welcome Back 👋
                 </h1>
@@ -72,8 +74,8 @@ const LoginPage = () => {
 
                 <hr className="mb-6" />
 
-                {/* Form Fields */}
                 <div className="flex flex-col gap-4">
+
                     <TextField
                         label="Username"
                         required
@@ -96,9 +98,9 @@ const LoginPage = () => {
                         min={6}
                         errors={errors}
                     />
+
                 </div>
 
-                {/* Login Button */}
                 <button
                     type="submit"
                     className="w-full mt-6 py-3 rounded-xl bg-custom-gradient text-white font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all duration-300"
@@ -106,7 +108,6 @@ const LoginPage = () => {
                     Login
                 </button>
 
-                {/* Signup Link */}
                 <p className="text-center text-slate-600 mt-6">
                     Don't have an account?{" "}
                     <Link
@@ -116,7 +117,9 @@ const LoginPage = () => {
                         Sign Up
                     </Link>
                 </p>
+
             </form>
+
         </div>
     );
 };
