@@ -10,7 +10,7 @@ import LoginPage from "./components/LoginPage";
 import DashboardLayout from "./components/Dashboard/DashboardLayout";
 import PrivateRoute from "./PrivateRoute";
 import ErrorPage from "./components/ErrorPage";
-import ForgotPassword from "./pages/ForgotPassword";
+import ForgotPassword from "./components/ForgotPassword";
 import VerifyOtp from "./pages/VerifyOtp";
 import ResetPassword from "./pages/ResetPassword";
 // import ForgotPassword from "./components/ForgotPassword";
