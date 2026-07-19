@@ -1,65 +1,97 @@
 package com.url.shortner.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import com.resend.Resend;
+import com.resend.services.emails.model.CreateEmailOptions;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-
 @Service
-@RequiredArgsConstructor
 public class EmailService {
 
+    @Value("${resend.api.key}")
+    private String apiKey;
 
-    private final JavaMailSender javaMailSender;
+    // ===========================
+    // Welcome Email
+    // ===========================
+    public void sendWelcomeEmail(String toEmail, String username) {
 
+        try {
+            Resend resend = new Resend(apiKey);
 
-    public void sendRegistrationEmail(String email, String username) {
+            CreateEmailOptions params = CreateEmailOptions.builder()
+                    .from("LinkForge <onboarding@resend.dev>")
+                    .to(toEmail)
+                    .subject("🎉 Welcome to LinkForge")
+                    .html("""
+                            <div style="font-family:Arial,sans-serif;padding:20px">
+                                <h2>Welcome to LinkForge 🚀</h2>
 
-        SimpleMailMessage message = new SimpleMailMessage();
+                                <p>Hello <b>%s</b>,</p>
 
-        message.setFrom("saranyanekkanti165@gmail.com");
-        message.setTo(email);
-        message.setSubject("Welcome to LinkForge");
+                                <p>Your account has been created successfully.</p>
 
-        message.setText(
-                "Hi " + username + ",\n\n" +
-                        "Your account has been created successfully.\n\n" +
-                        "Welcome to LinkForge!\n\n" +
-                        "Thank you."
-        );
+                                <p>You can now:</p>
 
-        javaMailSender.send(message);
+                                <ul>
+                                    <li>✅ Shorten URLs</li>
+                                    <li>✅ Track Analytics</li>
+                                    <li>✅ Manage your links securely</li>
+                                </ul>
+
+                                <br>
+
+                                <p>Happy Shortening!</p>
+
+                                <h3>Team LinkForge ❤️</h3>
+                            </div>
+                            """.formatted(username))
+                    .build();
+
+            resend.emails().send(params);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    // ===========================
+    // OTP Email
+    // ===========================
+    public void sendOtpEmail(String toEmail, String username, String otp) {
 
+        try {
+            Resend resend = new Resend(apiKey);
 
-    public void sendOtpEmail(
-            String email,
-            String username,
-            String otp
-    ) {
+            CreateEmailOptions params = CreateEmailOptions.builder()
+                    .from("LinkForge <onboarding@resend.dev>")
+                    .to(toEmail)
+                    .subject("🔐 LinkForge Password Reset OTP")
+                    .html("""
+                            <div style="font-family:Arial,sans-serif;padding:20px">
+                                <h2>Password Reset Request</h2>
 
-        SimpleMailMessage message = new SimpleMailMessage();
+                                <p>Hello <b>%s</b>,</p>
 
-        message.setFrom("saranyanekkanti165@gmail.com");
-        message.setTo(email);
-        message.setSubject("LinkForge Password Reset OTP");
+                                <p>Your One-Time Password (OTP) is:</p>
 
+                                <h1 style="color:#2563eb;letter-spacing:4px;">%s</h1>
 
-        message.setText(
-                "Hi " + username + ",\n\n" +
-                        "Your password reset verification code is:\n\n" +
-                        otp +
-                        "\n\n" +
-                        "This OTP is valid for 5 minutes.\n\n" +
-                        "If you did not request this password reset, ignore this email.\n\n" +
-                        "Thank you,\n" +
-                        "LinkForge Team"
-        );
+                                <p>This OTP is valid for <b>5 minutes</b>.</p>
 
+                                <p>If you didn't request a password reset, please ignore this email.</p>
 
-        javaMailSender.send(message);
+                                <br>
+
+                                <p>Team LinkForge ❤️</p>
+                            </div>
+                            """.formatted(username, otp))
+                    .build();
+
+            resend.emails().send(params);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
 }

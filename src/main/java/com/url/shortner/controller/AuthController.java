@@ -1,27 +1,22 @@
 package com.url.shortner.controller;
 
-
 import com.url.shortner.dtos.LoginRequest;
 import com.url.shortner.dtos.RegisterRequest;
 import com.url.shortner.models.User;
-import com.url.shortner.service.EmailService;
 import com.url.shortner.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
 public class AuthController {
 
-    private UserService userService;
-    private EmailService emailService;
-
+    private final UserService userService;
 
     @PostMapping("/public/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
 
         System.out.println("========LOGIN API HIT========");
 
@@ -29,7 +24,6 @@ public class AuthController {
                 userService.authenticateUser(loginRequest)
         );
     }
-
 
     @PostMapping("/public/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) {
@@ -42,15 +36,6 @@ public class AuthController {
         user.setRole("ROLE_USER");
 
         userService.registerUser(user);
-
-        try {
-            emailService.sendRegistrationEmail(
-                    user.getEmail(),
-                    user.getUsername()
-            );
-        } catch (Exception e) {
-            System.out.println("Email sending failed: " + e.getMessage());
-        }
 
         return ResponseEntity.ok("User registered successfully");
     }
