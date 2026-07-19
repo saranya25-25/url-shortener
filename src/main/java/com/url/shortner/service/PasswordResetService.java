@@ -23,7 +23,7 @@ public class PasswordResetService {
     public String generateOtp(String email){
 
         System.out.println("FORGOT EMAIL = " + email);
-        System.out.println("TOTAL USERS = " + userRepository.count());a
+        System.out.println("TOTAL USERS = " + userRepository.count());
         User user = userRepository.findByEmail(email)
                 .orElseThrow(
                         () -> new RuntimeException("Email not registered")
@@ -31,10 +31,10 @@ public class PasswordResetService {
 
 
         // Remove previous OTP
-        otpRepository.findByEmail(email)
-                .ifPresent(otpRepository::delete);
+//        otpRepository.findByEmail(email)
+//                .ifPresent(otpRepository::delete);
 
-
+        otpRepository.deleteByEmail(email);
 
         String otp = OtpGenerator.generateOtp();
 
