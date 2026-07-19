@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -21,15 +22,18 @@ const ForgotPassword = () => {
         formState: { errors }
     } = useForm();
 
-    // ===============================
-    // SEND OTP
-    // ===============================
-    const sendOtpHandler = async (data) => {
+    const getErrorMessage = (error) => {
+        return (
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            "Failed to send OTP"
+        );
+    };
 
+    const sendOtpHandler = async (data) => {
         setLoading(true);
 
         try {
-
             const response = await api.post(
                 "/api/auth/public/forgot-password",
                 {
@@ -43,28 +47,18 @@ const ForgotPassword = () => {
             toast.success(response.data);
 
         } catch (error) {
-
-            toast.error(
-                error?.response?.data || "Failed to send OTP"
-            );
+            console.log(error);
+            toast.error(getErrorMessage(error));
 
         } finally {
-
             setLoading(false);
-
         }
-
     };
 
-    // ===============================
-    // RESEND OTP
-    // ===============================
     const resendOtpHandler = async () => {
-
         setResendLoading(true);
 
         try {
-
             await api.post(
                 "/api/auth/public/forgot-password",
                 {
@@ -75,37 +69,24 @@ const ForgotPassword = () => {
             toast.success("OTP resent successfully");
 
         } catch (error) {
-
-            toast.error(
-                error?.response?.data || "Resend failed"
-            );
+            console.log(error);
+            toast.error(getErrorMessage(error));
 
         } finally {
-
             setResendLoading(false);
-
         }
-
     };
 
-    // ===============================
-    // VERIFY OTP
-    // ===============================
     const verifyOtpHandler = async () => {
 
         if (otp.length !== 6) {
-
             toast.error("Enter a valid 6-digit OTP");
             return;
-
         }
 
         setVerifyLoading(true);
 
         try {
-
-            // Backend API will be added next
-            // await api.post("/api/auth/public/verify-otp",{email,otp});
 
             toast.success("OTP Verified Successfully 🎉");
 
@@ -117,20 +98,16 @@ const ForgotPassword = () => {
 
         } catch (error) {
 
-            toast.error(
-                error?.response?.data || "Invalid OTP"
-            );
+            toast.error(getErrorMessage(error));
 
         } finally {
 
             setVerifyLoading(false);
 
         }
-
     };
 
     return (
-
         <div className="min-h-screen flex justify-center items-center bg-slate-100">
 
             <form
@@ -139,15 +116,11 @@ const ForgotPassword = () => {
             >
 
                 <h1 className="text-3xl font-bold text-center">
-
                     Forgot Password 🔐
-
                 </h1>
 
                 <p className="text-center text-gray-500 mt-2">
-
                     Enter your registered email
-
                 </p>
 
                 <input
@@ -165,52 +138,30 @@ const ForgotPassword = () => {
                     </p>
                 )}
 
-                {/* SEND OTP BUTTON */}
-
                 <button
                     type="submit"
                     disabled={loading}
-                    className={`w-full py-3 mt-5 rounded-lg font-semibold transition-all duration-300 ${
-                        loading
-                            ? "bg-blue-300 cursor-not-allowed"
-                            : "bg-blue-600 hover:bg-blue-700 text-white"
-                    }`}
+                    className={`w-full py-3 mt-5 rounded-lg font-semibold ${
+    loading
+        ? "bg-blue-300 cursor-not-allowed"
+        : "bg-blue-600 hover:bg-blue-700 text-white"
+}`}
                 >
-
-                    {loading ? (
-                        <div className="flex justify-center items-center gap-2">
-
-                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-
-                            Sending OTP...
-
-                        </div>
-                    ) : (
-                        "Send OTP"
-                    )}
-
+                    {loading ? "Sending OTP..." : "Send OTP"}
                 </button>
 
                 {otpSent && (
-
                     <div className="mt-6">
 
                         <p className="text-green-600 text-center font-semibold">
-
                             ✅ OTP Sent Successfully
-
                         </p>
 
                         <p className="text-center text-gray-500 mt-2">
-
                             OTP sent to
-
                             <br />
-
                             <b>{email}</b>
-
                         </p>
-
 
                         <input
                             type="text"
@@ -224,88 +175,39 @@ const ForgotPassword = () => {
                                         .replace(/[^A-Z0-9]/g, "")
                                 )
                             }
-                            className="border p-3 w-full mt-5 rounded-lg text-center text-xl tracking-[8px] outline-none focus:ring-2 focus:ring-green-500"
+                            className="border p-3 w-full mt-5 rounded-lg text-center text-xl tracking-[8px]"
                         />
-                            {/* VERIFY BUTTON */}
 
                         <button
                             type="button"
                             onClick={verifyOtpHandler}
                             disabled={verifyLoading}
-                            className={`w-full py-3 mt-5 rounded-lg font-semibold transition-all duration-300 ${
-                                verifyLoading
-                                    ? "bg-green-300 cursor-not-allowed"
-                                    : "bg-green-600 hover:bg-green-700 text-white"
-                            }`}
+                            className="w-full py-3 mt-5 rounded-lg font-semibold bg-green-600 hover:bg-green-700 text-white"
                         >
-
-                            {verifyLoading ? (
-
-                                <div className="flex justify-center items-center gap-2">
-
-                                    <div
-                                        className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-
-                                    Verifying...
-
-                                </div>
-
-                            ) : (
-
-                                "Verify Code"
-
-                            )}
-
+                            {verifyLoading ? "Verifying..." : "Verify Code"}
                         </button>
-
-                            {/* RESEND BUTTON */}
 
                         <button
                             type="button"
                             onClick={resendOtpHandler}
                             disabled={resendLoading}
-                            className={`w-full py-3 mt-3 rounded-lg font-semibold transition-all duration-300 ${
-                                resendLoading
-                                    ? "bg-gray-300 cursor-not-allowed"
-                                    : "bg-gray-700 hover:bg-gray-800 text-white"
-                            }`}
+                            className="w-full py-3 mt-3 rounded-lg font-semibold bg-gray-700 hover:bg-gray-800 text-white"
                         >
-
-                            {resendLoading ? (
-
-                                <div className="flex justify-center items-center gap-2">
-
-                                    <div
-                                        className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-
-                                    Resending...
-
-                                </div>
-
-                            ) : (
-
-                                "Resend Code"
-
-                            )}
-
+                            {resendLoading ? "Resending..." : "Resend Code"}
                         </button>
 
                         <p className="text-center text-gray-500 text-sm mt-5">
-
                             📩 Check Inbox, Spam & Promotions folder
-
                         </p>
 
                     </div>
-
                 )}
 
             </form>
 
         </div>
-
     );
-
 };
 
 export default ForgotPassword;
+
