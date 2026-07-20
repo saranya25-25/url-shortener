@@ -46,6 +46,7 @@ const AppRouter = () => {
                 path="/reset-password"
                 element={<ResetPassword />}
             />
+
           <Route path="/dashboard" element={ <PrivateRoute publicPage={false}><DashboardLayout /></PrivateRoute>} />
           <Route path="/error" element={ <ErrorPage />} />
           <Route path="*" element={ <ErrorPage message="We can't seem to find the page you're looking for"/>} />
