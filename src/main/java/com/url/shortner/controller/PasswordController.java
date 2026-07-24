@@ -20,9 +20,13 @@ public class PasswordController {
             @RequestBody ForgotPasswordRequest request
     ) {
 
+        System.out.println("========== FORGOT PASSWORD API HIT ==========");
+
         String response = passwordResetService.generateOtp(
                 request.getEmail()
         );
+
+        System.out.println("========== RESPONSE RETURNED ==========");
 
         return ResponseEntity.ok(response);
     }
