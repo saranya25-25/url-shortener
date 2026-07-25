@@ -19,31 +19,32 @@ public class EmailService {
     // ===========================
     public void sendWelcomeEmail(String toEmail, String username) {
 
+        System.out.println("EMAIL METHOD STARTED");
+
         try {
+
+            System.out.println("Creating Mail Message");
 
             SimpleMailMessage message = new SimpleMailMessage();
 
+            message.setFrom(System.getenv("MAIL_USERNAME"));
             message.setTo(toEmail);
-            message.setSubject("🎉 Welcome to LinkForge");
-            message.setText(
-                    "Welcome to LinkForge 🚀\n\n" +
-                            "Hello " + username + ",\n\n" +
-                            "Your account has been created successfully.\n\n" +
-                            "You can now:\n" +
-                            "✅ Shorten URLs\n" +
-                            "✅ Track Analytics\n" +
-                            "✅ Manage your links securely\n\n" +
-                            "Happy Shortening!\n\n" +
-                            "Thank you for choosing LinkForge.\n\n" +
-                            "❤️ Team LinkForge"
-            );
+            message.setSubject("Welcome to LinkForge");
+            message.setText("Hello " + username);
+
+            System.out.println("Calling mailSender.send()");
 
             mailSender.send(message);
 
-            System.out.println("WELCOME EMAIL SENT : " + toEmail);
+            System.out.println("EMAIL SENT SUCCESSFULLY");
 
         } catch (Exception e) {
+
+            System.out.println("EMAIL FAILED");
+
             e.printStackTrace();
+
+            throw new RuntimeException(e);
         }
     }
 
