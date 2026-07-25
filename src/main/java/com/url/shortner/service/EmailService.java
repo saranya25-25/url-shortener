@@ -14,6 +14,12 @@ import java.time.format.DateTimeFormatter;
 public class EmailService {
     @Value("${mail.from}")
     private String mailFrom;
+
+    @Value("${spring.mail.host}")
+    private String mailHost;
+
+    @Value("${spring.mail.username}")
+    private String mailUsername;
     private final JavaMailSender mailSender;
 
     // ===========================
@@ -56,9 +62,15 @@ public class EmailService {
     public void sendOtpEmail(String toEmail, String username, String otp) {
 
         try {
+            System.out.println("========== EMAIL DEBUG ==========");
+            System.out.println("MAIL HOST : " + mailHost);
+            System.out.println("MAIL USER : " + mailUsername);
+            System.out.println("MAIL FROM : " + mailFrom);
+            System.out.println("=================================");
 
             SimpleMailMessage message = new SimpleMailMessage();
 
+            message.setFrom(mailFrom);
             message.setTo(toEmail);
             message.setSubject("🔐 LinkForge Password Reset OTP");
             message.setText(
