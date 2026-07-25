@@ -1,6 +1,7 @@
 package com.url.shortner.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,8 @@ import java.time.format.DateTimeFormatter;
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-
+    @Value("${mail.from}")
+    private String mailFrom;
     private final JavaMailSender mailSender;
 
     // ===========================
@@ -27,7 +29,7 @@ public class EmailService {
 
             SimpleMailMessage message = new SimpleMailMessage();
 
-            message.setFrom(System.getenv("MAIL_USERNAME"));
+            message.setFrom(mailFrom);
             message.setTo(toEmail);
             message.setSubject("Welcome to LinkForge");
             message.setText("Hello " + username);

@@ -48,13 +48,13 @@ public class AuthController {
             );
 
 
-        } catch(RuntimeException e) {
+        } catch (Exception e) {
 
+            e.printStackTrace();
 
             return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-
+                    .status(500)
+                    .body(e.toString());
         }
 
     }
