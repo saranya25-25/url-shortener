@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-
 import TextField from "./TextField";
 import Loader from "./Loader";
 import api from "../api/api";
@@ -32,26 +31,14 @@ const RegisterPage = () => {
             await api.post("/api/auth/public/register", data);
 
             toast.success("Registration Successful!");
-
             reset();
-
             navigate("/login");
         } catch (error) {
+            console.error(error);
 
-            console.log(error);
-
-
-            if(error.response && error.response.data){
-
-                toast.error(error.response.data);
-
-            }
-            else{
-
-                toast.error("Registration Failed!");
-
-            }
-
+            toast.error(
+                error?.response?.data || "Registration Failed! Please try again."
+            );
         } finally {
             setLoader(false);
         }
@@ -62,31 +49,29 @@ const RegisterPage = () => {
     }
 
     return (
-        <div className="min-h-[calc(100vh-64px)] flex justify-center items-center bg-gradient-to-br from-slate-50 via-white to-blue-50 px-4">
+        <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50 px-4">
             <form
                 onSubmit={handleSubmit(registerHandler)}
-                className="sm:w-[450px] w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 px-8 py-10"
+                className="w-full max-w-md rounded-2xl border border-slate-200 bg-white px-8 py-10 shadow-2xl sm:w-[450px]"
             >
-                {/* Heading */}
                 <h1 className="text-center text-3xl font-bold text-slate-800">
                     Create Your Account 🚀
                 </h1>
 
-                <p className="text-center text-slate-500 mt-2 mb-6">
+                <p className="mt-2 mb-6 text-center text-slate-500">
                     Join LinkForge and start managing your URLs smarter.
                 </p>
 
                 <hr className="mb-6" />
 
-                {/* Form Fields */}
                 <div className="flex flex-col gap-4">
                     <TextField
                         label="Username"
                         required
                         id="username"
                         type="text"
-                        message="*Username is required"
                         placeholder="Enter your username"
+                        message="*Username is required"
                         register={register}
                         errors={errors}
                     />
@@ -96,8 +81,8 @@ const RegisterPage = () => {
                         required
                         id="email"
                         type="email"
-                        message="*Email is required"
                         placeholder="Enter your email"
+                        message="*Email is required"
                         register={register}
                         errors={errors}
                     />
@@ -107,28 +92,26 @@ const RegisterPage = () => {
                         required
                         id="password"
                         type="password"
-                        message="*Password is required"
                         placeholder="Enter your password"
+                        message="*Password is required"
                         register={register}
                         min={6}
                         errors={errors}
                     />
                 </div>
 
-                {/* Register Button */}
                 <button
                     type="submit"
-                    className="w-full mt-6 py-3 rounded-xl bg-custom-gradient text-white font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all duration-300"
+                    className="mt-6 w-full rounded-xl bg-custom-gradient py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-xl active:scale-95"
                 >
                     Create Account
                 </button>
 
-                {/* Login Link */}
-                <p className="text-center text-slate-600 mt-6">
+                <p className="mt-6 text-center text-slate-600">
                     Already have an account?{" "}
                     <Link
                         to="/login"
-                        className="font-semibold text-btnColor hover:underline"
+                        className="font-semibold text-btnColor transition hover:underline"
                     >
                         Login
                     </Link>
