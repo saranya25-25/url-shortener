@@ -1,82 +1,55 @@
 import React from "react";
-import { FaExclamationTriangle } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { FaExclamationTriangle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const ErrorPage = ({ message }) => {
     const navigate = useNavigate();
 
     return (
-        <div className="relative flex items-center justify-center min-h-[calc(100vh-64px)] overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-100 px-6">
-
-            {/* Background Decorations */}
-            <div className="absolute -top-20 -left-20 h-72 w-72 rounded-full bg-blue-200 opacity-30 blur-3xl"></div>
-            <div className="absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-purple-300 opacity-30 blur-3xl"></div>
+        <div className="relative flex min-h-[calc(100vh-64px)] items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-100 px-6">
+            <div className="absolute -left-24 -top-24 h-80 w-80 rounded-full bg-blue-300/30 blur-3xl"></div>
+            <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-purple-300/30 blur-3xl"></div>
 
             <motion.div
-                initial={{ opacity: 0, scale: 0.85, y: 40 }}
+                initial={{ opacity: 0, scale: 0.9, y: 40 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
-                className="relative z-10 max-w-lg w-full rounded-3xl bg-white/80 backdrop-blur-md shadow-2xl border border-white p-10 text-center"
+                transition={{ duration: 0.6 }}
+                className="relative z-10 w-full max-w-xl rounded-3xl border border-white/40 bg-white/80 p-10 text-center shadow-2xl backdrop-blur-lg"
             >
-                {/* Animated Icon */}
                 <motion.div
                     animate={{
                         y: [0, -10, 0],
-                        rotate: [0, -5, 5, 0],
+                        rotate: [0, -6, 6, 0],
                     }}
                     transition={{
+                        duration: 2.5,
                         repeat: Infinity,
-                        duration: 2,
                     }}
                     className="flex justify-center"
                 >
                     <FaExclamationTriangle className="text-7xl text-red-500 drop-shadow-lg" />
                 </motion.div>
 
-                {/* Heading */}
-                <motion.h1
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="mt-6 text-4xl font-extrabold text-slate-800"
-                >
-                    Oops!
-                </motion.h1>
+                <h1 className="mt-6 text-6xl font-extrabold text-slate-800">
+                    404
+                </h1>
 
-                <motion.h2
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.35 }}
-                    className="mt-2 text-xl font-semibold text-slate-700"
-                >
-                    Something went wrong
-                </motion.h2>
+                <h2 className="mt-3 text-2xl font-bold text-slate-700">
+                    Page Not Found
+                </h2>
 
-                {/* Message */}
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    className="mt-5 text-gray-600 leading-7"
-                >
-                    {message
-                        ? message
-                        : "An unexpected error occurred. Please try again later or return to the homepage."}
-                </motion.p>
+                <p className="mt-5 leading-7 text-slate-600">
+                    {message ||
+                        "The page you're looking for doesn't exist or may have been moved. Please return to the homepage and continue exploring LinkForge."}
+                </p>
 
-                {/* Button */}
                 <motion.button
-                    whileHover={{
-                        scale: 1.05,
-                        y: -3,
-                    }}
-                    whileTap={{
-                        scale: 0.95,
-                    }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
                     transition={{ type: "spring", stiffness: 250 }}
                     onClick={() => navigate("/")}
-                    className="mt-8 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-3 font-semibold text-white shadow-lg transition-all hover:shadow-xl"
+                    className="mt-8 rounded-xl bg-custom-gradient px-8 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl"
                 >
                     ← Back to Home
                 </motion.button>
