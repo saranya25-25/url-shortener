@@ -22,7 +22,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
-    private final EmailService emailService;
+//    private final EmailService emailService;
     // Register User
     public User registerUser(User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
@@ -33,10 +33,10 @@ public class UserService {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User savedUser = userRepository.save(user);
-        emailService.sendWelcomeEmail(
-                savedUser.getEmail(),
-                savedUser.getUsername()
-        );
+//        emailService.sendWelcomeEmail(
+//                savedUser.getEmail(),
+//                savedUser.getUsername()
+//        );
         return savedUser;
     }
     // Login User
@@ -61,10 +61,10 @@ public class UserService {
             User user = userRepository.findByUsername(loginRequest.getUsername())
                     .orElseThrow(() ->
                             new UsernameNotFoundException("User not found"));
-            emailService.sendLoginAlertEmail(
-                    user.getEmail(),
-                    user.getUsername()
-            );
+//            emailService.sendLoginAlertEmail(
+//                    user.getEmail(),
+//                    user.getUsername()
+//            );
             System.out.println("JWT Generated Successfully");
             return new JwtAuthenticationResponse(jwt);
         } catch (BadCredentialsException e) {

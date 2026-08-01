@@ -84,15 +84,15 @@ const LoginPage = () => {
                         errors={errors}
                     />
                 </div>
-                {/* Forgot Password */}
-                <div className="text-right mt-3">
-                    <Link
-                        to="/forgot-password"
-                        className="text-sm font-semibold text-btnColor hover:underline"
-                    >
-                        Forgot Password?
-                    </Link>
-                </div>
+                {/*/!* Forgot Password *!/*/}
+                {/*<div className="text-right mt-3">*/}
+                {/*    <Link*/}
+                {/*        to="/forgot-password"*/}
+                {/*        className="text-sm font-semibold text-btnColor hover:underline"*/}
+                {/*    >*/}
+                {/*        Forgot Password?*/}
+                {/*    </Link>*/}
+                {/*</div>*/}
                 <button
                     type="submit"
                     className="w-full mt-6 py-3 rounded-xl bg-custom-gradient text-white font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all duration-300"
