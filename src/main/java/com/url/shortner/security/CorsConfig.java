@@ -18,11 +18,8 @@ public class CorsConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-
         CorsConfiguration configuration = new CorsConfiguration();
-
         configuration.setAllowedOrigins(List.of(frontendUrl));
-
         configuration.setAllowedMethods(List.of(
                 "GET",
                 "POST",
@@ -30,14 +27,10 @@ public class CorsConfig {
                 "DELETE",
                 "OPTIONS"
         ));
-
         configuration.setAllowedHeaders(List.of("*"));
-
         configuration.setAllowCredentials(true);
-
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
-
         source.registerCorsConfiguration("/**", configuration);
 
         return source;

@@ -17,13 +17,10 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtUtils {
-
     @Value("${jwt.secret}")
     private String jwtSecret;
-
     @Value("${jwt.expiration}")
     private int jwtExpirationMs;
-
     // Authorization -> Bearer <TOKEN>
     public String getJwtFromHeader(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");

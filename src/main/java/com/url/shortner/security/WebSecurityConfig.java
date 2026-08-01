@@ -25,76 +25,55 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @EnableMethodSecurity
 @AllArgsConstructor
 public class WebSecurityConfig {
-
     private final UserDetailsServiceImpl userDetailsService;
     private final CorsConfigurationSource corsConfigurationSource;
-
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration
     ) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
-
         DaoAuthenticationProvider authProvider =
                 new DaoAuthenticationProvider(userDetailsService);
-
         authProvider.setPasswordEncoder(passwordEncoder());
-
         return authProvider;
     }
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .csrf(AbstractHttpConfigurer::disable)
-
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-
                 .authorizeHttpRequests(auth -> auth
-
                         .requestMatchers(HttpMethod.OPTIONS, "/**")
                         .permitAll()
-
                         // Authentication APIs
                         .requestMatchers("/api/auth/**")
                         .permitAll()
-
                         // Redirect short URLs
                         .requestMatchers("/{shortUrl}")
                         .permitAll()
-
                         // QR Code generation
                         .requestMatchers("/api/qr/**")
                         .permitAll()
-
                         // User URL management
                         .requestMatchers("/api/urls/**")
                         .authenticated()
-
                         .anyRequest()
                         .authenticated()
                 );
-
-
         http.authenticationProvider(authenticationProvider());
 
         http.addFilterBefore(
