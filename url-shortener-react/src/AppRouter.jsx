@@ -1,68 +1,87 @@
-import { Route, Routes } from "react-router-dom";
-import Navbar from "./components/NavBar";
-import ShortenUrlPage from "./components/ShortenUrlPage";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import Navbar from "./components/NavBar";
 import Footer from "./components/Footer";
 import LandingPage from "./components/LandingPage";
 import AboutPage from "./components/AboutPage";
 import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
+import ShortenUrlPage from "./components/ShortenUrlPage";
 import DashboardLayout from "./components/Dashboard/DashboardLayout";
 import PrivateRoute from "./PrivateRoute";
 import ErrorPage from "./components/ErrorPage";
 import ForgotPassword from "./components/ForgotPassword";
 import VerifyOtp from "./pages/VerifyOtp";
 import ResetPassword from "./pages/ResetPassword";
-// import ForgotPassword from "./components/ForgotPassword";
-// <PrivateRoute publicPage={true}>
-//      <RegisterPage />
-// </PrivateRoute>
 
 const AppRouter = () => {
-  const hideHeaderFooter = location.pathname.startsWith("/s");
+    const location = useLocation();
+    const hideHeaderFooter = location.pathname.startsWith("/s");
 
     return (
         <>
-        {!hideHeaderFooter && <Navbar /> }
-        <Toaster position='bottom-center'/>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/s/:url" element={<ShortenUrlPage />} />
-
-          <Route path="/register" element={<PrivateRoute publicPage={true}><RegisterPage /></PrivateRoute>} />
-          <Route path="/login" element={<PrivateRoute publicPage={true}><LoginPage /></PrivateRoute>} />
-            <Route
-                path="/forgot-password"
-                element={<ForgotPassword />}
-            />
-
-            <Route
-                path="/verify-otp"
-                element={<VerifyOtp />}
-            />
-
-            <Route
-                path="/reset-password"
-                element={<ResetPassword />}
-            />
-
-          <Route path="/dashboard" element={ <PrivateRoute publicPage={false}><DashboardLayout /></PrivateRoute>} />
-          <Route path="/error" element={ <ErrorPage />} />
-          <Route path="*" element={ <ErrorPage message="We can't seem to find the page you're looking for"/>} />
-        </Routes>
-        {!hideHeaderFooter && <Footer />}
-      </>
+            {!hideHeaderFooter && <Navbar />}
+            <Toaster position="bottom-center" />
+            <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/s/:url" element={<ShortenUrlPage />} />
+                <Route
+                    path="/register"
+                    element={
+                        <PrivateRoute publicPage={true}>
+                            <RegisterPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/login"
+                    element={
+                        <PrivateRoute publicPage={true}>
+                            <LoginPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/forgot-password"
+                    element={<ForgotPassword />}
+                />
+                <Route
+                    path="/verify-otp"
+                    element={<VerifyOtp />}
+                />
+                <Route
+                    path="/reset-password"
+                    element={<ResetPassword />}
+                />
+                <Route
+                    path="/dashboard"
+                    element={
+                        <PrivateRoute publicPage={false}>
+                            <DashboardLayout />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/error"
+                    element={<ErrorPage />}
+                />
+                <Route
+                    path="*"
+                    element={
+                        <ErrorPage message="We can't seem to find the page you're looking for" />
+                    }
+                />
+            </Routes>
+            {!hideHeaderFooter && <Footer />}
+        </>
     );
-}
-
-
+};
 export default AppRouter;
-
 export const SubDomainRouter = () => {
     return (
         <Routes>
-          <Route path="/s/:url" element={<ShortenUrlPage />} />
+            <Route path="/s/:url" element={<ShortenUrlPage />} />
         </Routes>
-    )
-}
+    );
+};
