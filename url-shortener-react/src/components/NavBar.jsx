@@ -14,13 +14,14 @@ const Navbar = () => {
 
   const path = location.pathname;
 
+  const closeMenu = () => setNavbarOpen(false);
+
   const onLogOutHandler = () => {
     setToken(null);
     localStorage.removeItem("JWT_TOKEN");
+    closeMenu();
     navigate("/login");
   };
-
-  const closeMenu = () => setNavbarOpen(false);
 
   const navLinkClass = (route) =>
       `transition-all duration-300 hover:text-white ${
@@ -30,7 +31,7 @@ const Navbar = () => {
       }`;
 
   return (
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-custom-gradient shadow-lg">
+      <header className="sticky top-0 z-50 bg-custom-gradient backdrop-blur-md shadow-lg">
         <div className="max-w-7xl mx-auto h-16 px-4 sm:px-8 lg:px-14 flex items-center justify-between">
           <Link to="/" onClick={closeMenu}>
             <h1 className="text-3xl font-extrabold italic tracking-wide text-white select-none">
@@ -39,21 +40,17 @@ const Navbar = () => {
           </Link>
 
           <ul
-              className={`sm:flex sm:items-center sm:gap-8 absolute sm:static left-0 top-16 w-full sm:w-auto bg-custom-gradient sm:bg-transparent shadow-lg sm:shadow-none overflow-hidden transition-all duration-300 ${
+              className={`absolute sm:static left-0 top-16 w-full sm:w-auto bg-custom-gradient sm:bg-transparent shadow-lg sm:shadow-none overflow-hidden transition-all duration-300 sm:flex sm:items-center sm:gap-8 ${
                   navbarOpen ? "max-h-96 py-5" : "max-h-0 sm:max-h-full"
               }`}
           >
-            <li className="px-5 sm:px-0 py-2 sm:py-0">
-              <Link
-                  to="/"
-                  className={navLinkClass("/")}
-                  onClick={closeMenu}
-              >
+            <li className="px-5 py-2 sm:px-0 sm:py-0">
+              <Link to="/" className={navLinkClass("/")} onClick={closeMenu}>
                 Home
               </Link>
             </li>
 
-            <li className="px-5 sm:px-0 py-2 sm:py-0">
+            <li className="px-5 py-2 sm:px-0 sm:py-0">
               <Link
                   to="/about"
                   className={navLinkClass("/about")}
@@ -64,7 +61,7 @@ const Navbar = () => {
             </li>
 
             {token && (
-                <li className="px-5 sm:px-0 py-2 sm:py-0">
+                <li className="px-5 py-2 sm:px-0 sm:py-0">
                   <Link
                       to="/dashboard"
                       className={navLinkClass("/dashboard")}
@@ -76,20 +73,20 @@ const Navbar = () => {
             )}
 
             {!token ? (
-                <li className="px-5 sm:px-0 py-2 sm:py-0">
+                <li className="px-5 py-2 sm:px-0 sm:py-0">
                   <Link
                       to="/register"
                       onClick={closeMenu}
-                      className="inline-block px-5 py-2 rounded-xl bg-white text-slate-800 font-semibold hover:scale-105 hover:shadow-lg transition-all duration-300"
+                      className="inline-block rounded-xl bg-white px-5 py-2 font-semibold text-slate-800 transition-all duration-300 hover:scale-105 hover:shadow-lg"
                   >
                     Sign Up
                   </Link>
                 </li>
             ) : (
-                <li className="px-5 sm:px-0 py-2 sm:py-0">
+                <li className="px-5 py-2 sm:px-0 sm:py-0">
                   <button
                       onClick={onLogOutHandler}
-                      className="flex items-center gap-2 px-5 py-2 rounded-xl bg-red-500 text-white font-semibold hover:bg-red-600 hover:scale-105 transition-all duration-300"
+                      className="flex items-center gap-2 rounded-xl bg-red-500 px-5 py-2 font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-red-600"
                   >
                     <FiLogOut />
                     Logout
@@ -100,7 +97,7 @@ const Navbar = () => {
 
           <button
               onClick={() => setNavbarOpen(!navbarOpen)}
-              className="sm:hidden text-white text-3xl"
+              className="text-3xl text-white sm:hidden"
           >
             {navbarOpen ? <RxCross2 /> : <IoIosMenu />}
           </button>
