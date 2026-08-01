@@ -8,19 +8,21 @@ const ShortenUrlPage = () => {
     const { url } = useParams();
 
     useEffect(() => {
-        if (url) {
-            const timer = setTimeout(() => {
-                window.location.href =
-                    import.meta.env.VITE_BACKEND_URL + `/${url}`;
-            }, 1200);
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-            return () => clearTimeout(timer);
+        if (!url || !backendUrl) {
+            return;
         }
+
+        const timer = setTimeout(() => {
+            window.location.replace(`${backendUrl}/${url}`);
+        }, 1200);
+
+        return () => clearTimeout(timer);
     }, [url]);
 
     return (
-        <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-100">
-            {/* Background Blur Effects */}
+        <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-100">
             <div className="absolute -top-24 left-0 h-72 w-72 rounded-full bg-blue-300/30 blur-3xl"></div>
             <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-purple-300/30 blur-3xl"></div>
 
@@ -28,12 +30,10 @@ const ShortenUrlPage = () => {
                 initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
-                className="relative z-10 bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl border border-white px-10 py-10 flex flex-col items-center"
+                className="relative z-10 flex flex-col items-center rounded-3xl border border-white bg-white/80 px-10 py-10 shadow-2xl backdrop-blur-md"
             >
                 <motion.div
-                    animate={{
-                        rotate: [0, 360],
-                    }}
+                    animate={{ rotate: [0, 360] }}
                     transition={{
                         repeat: Infinity,
                         duration: 4,
@@ -45,7 +45,7 @@ const ShortenUrlPage = () => {
                 </motion.div>
 
                 <RotatingLines
-                    visible={true}
+                    visible
                     height="60"
                     width="60"
                     color="#2563EB"
@@ -63,25 +63,21 @@ const ShortenUrlPage = () => {
                     Redirecting...
                 </motion.h1>
 
-                <p className="mt-3 text-slate-600 text-center max-w-sm leading-7">
-                    Please wait while we take you to your destination.
-                    Your shortened link is being securely processed.
+                <p className="mt-3 max-w-sm text-center leading-7 text-slate-600">
+                    Please wait while we securely redirect you to your destination.
                 </p>
 
-                {/* Animated Dots */}
-                <div className="flex gap-2 mt-6">
+                <div className="mt-6 flex gap-2">
                     {[0, 1, 2].map((dot) => (
                         <motion.div
                             key={dot}
-                            animate={{
-                                y: [0, -8, 0],
-                            }}
+                            animate={{ y: [0, -8, 0] }}
                             transition={{
                                 repeat: Infinity,
                                 duration: 0.6,
                                 delay: dot * 0.2,
                             }}
-                            className="w-3 h-3 rounded-full bg-blue-600"
+                            className="h-3 w-3 rounded-full bg-blue-600"
                         />
                     ))}
                 </div>
